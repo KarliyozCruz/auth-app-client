@@ -5,3 +5,8 @@ declare interface AuthResponse {
     token?: string;
     msg?: string;
 }
+
+declare interface IUsuario {
+    uid: string,
+    name: string
+}

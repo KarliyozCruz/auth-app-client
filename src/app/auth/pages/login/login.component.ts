@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthServiceService } from '../../../services/auth-service.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -21,15 +22,17 @@ export class LoginComponent {
               private authService: AuthServiceService) { }
 
   login(): void {
-    console.log(this.miFormulario.value);
-
     const {email, password} = this.miFormulario.value;
 
     this.authService.login(email, password)
     .subscribe( rsp => {
       console.log(rsp);
+      if(rsp === true) {
+        this.router.navigate(['/dashboard']);
+      }else{
+        Swal.fire('Error', (rsp as AuthResponse).msg , 'error');
+      }
     });
-    // this.router.navigate(['/dashboard']);
   }
 
 }
